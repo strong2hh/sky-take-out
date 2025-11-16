@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -103,6 +104,30 @@ public class EmployeeController {
     public Result startorstop(@PathVariable Integer status, long id) {
         log.info("启用禁用员工：{}, {}", status, id);
         employeeService.startotstop(status,id);
+        return Result.success();
+    }
+
+    /**
+     * 通过id查询员工
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public Result searchEmployeeById(@PathVariable Integer id) {
+        log.info("通过id查询员工；{}", id);
+        Employee employee = employeeService.searchEmployeeById(id);
+        return Result.success(employee);
+    }
+
+    /**
+     * 更新员工信息
+     * @param employeeDTO
+     * @return
+     */
+    @PutMapping
+    public Result updateEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        log.info("更新员工信息{}", employeeDTO);
+        employeeService.updateEmployee(employeeDTO);
         return Result.success();
     }
 }
